@@ -31,6 +31,7 @@ import {
   PlusCircleIcon,
   PlusIcon,
 } from "@heroicons/react/16/solid";
+import ToggleCurrency from "./toggle-currency";
 
 const navItems = [
   { label: "Home", url: "/" },
@@ -85,9 +86,7 @@ export default function ApplicationLayout({
             <NavbarItem aria-label="New Subscription">
               <PlusCircleIcon />
             </NavbarItem>
-            <NavbarItem aria-label="Switch Currency">
-              <CurrencyDollarIcon />
-            </NavbarItem>
+            <ToggleCurrency />
           </NavbarSection>
         </Navbar>
       }

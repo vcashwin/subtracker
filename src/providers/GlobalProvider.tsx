@@ -3,10 +3,16 @@
 import React, { createContext, useContext, useState } from "react";
 import { Currency } from "@/types";
 
-const GlobalContext = createContext({});
+const GlobalContext = createContext<{
+  currency: Currency;
+  setCurrency: (currency: Currency) => void;
+}>({
+  currency: "INR",
+  setCurrency: () => {},
+});
 
 const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
-  const [currency, setCurrency] = useState<Currency>("USD");
+  const [currency, setCurrency] = useState<Currency>("INR");
 
   return (
     <GlobalContext.Provider value={{ currency, setCurrency }}>
