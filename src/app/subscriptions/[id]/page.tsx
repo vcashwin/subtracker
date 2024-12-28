@@ -15,6 +15,7 @@ import {
 } from "@heroicons/react/16/solid";
 import { Button } from "@/components/button";
 import { DeleteButton } from "./delete-button";
+import { EditButton } from "./edit-button";
 
 export default async function SubscriptionPage({
   params,
@@ -39,7 +40,7 @@ export default async function SubscriptionPage({
           </span>
         </div>
         <div className="flex gap-2">
-          <Button outline>Edit</Button>
+          <EditButton subscription={subscription} />
           <DeleteButton id={subscription.id} />
         </div>
       </div>

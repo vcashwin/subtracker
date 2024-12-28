@@ -1,6 +1,5 @@
 "use client";
 
-import { createSubscription } from "@/actions/create-subscription";
 import { Button } from "@/components/button";
 import {
   Dialog,
@@ -11,40 +10,45 @@ import {
 } from "@/components/dialog";
 import { Field, FieldGroup, Fieldset, Label } from "@/components/fieldset";
 import { Input } from "@/components/input";
-import { NavbarItem } from "@/components/navbar";
 import { Select } from "@/components/select";
 import { useGlobalContext } from "@/providers/GlobalProvider";
-import { formatCurrency } from "@/utils";
-import { PlusCircleIcon } from "@heroicons/react/16/solid";
-import { SubscriptionCategory } from "@prisma/client";
+import { Subscription } from "@/types";
+import { convertCurrency, formatCurrency } from "@/utils";
 import { useRef, useState } from "react";
+import { SubscriptionCategory } from "@prisma/client";
+import { updateSubscription } from "@/actions/update-subscription";
 
-export default function NewSubscription() {
+export const EditButton = ({
+  subscription,
+}: {
+  subscription: Subscription;
+}) => {
   const { currency } = useGlobalContext();
-  const form = useRef<HTMLFormElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const handleCreateSubscription = async () => {
+  const form = useRef<HTMLFormElement>(null);
+  const handleUpdateSubscription = async () => {
     if (!form.current) return;
     const formValues = Object.fromEntries(new FormData(form.current).entries());
-    const subscription = {
+    const updatedSubscription = {
+      ...subscription,
       title: formValues.title as string,
       price: Number(formValues.amount),
       currency: currency,
       renewsAt: new Date(formValues.renewsAt as string),
       category: formValues.category as SubscriptionCategory,
     };
-    await createSubscription(subscription);
+    await updateSubscription(subscription.id, updatedSubscription);
     setIsOpen(false);
   };
   return (
     <>
-      <NavbarItem onClick={() => setIsOpen(true)} aria-label="New Subscription">
-        <PlusCircleIcon />
-      </NavbarItem>
+      <Button outline onClick={() => setIsOpen(true)}>
+        Edit
+      </Button>
       <Dialog open={isOpen} onClose={setIsOpen}>
-        <DialogTitle>New Subscription</DialogTitle>
+        <DialogTitle>Edit Subscription</DialogTitle>
         <DialogDescription>
-          Enter the details of the subscription you want to track.
+          Update the details of the subscription you want to track.
         </DialogDescription>
         <DialogBody className="flex flex-col gap-8">
           <form ref={form}>
@@ -56,15 +60,24 @@ export default function NewSubscription() {
                     name="amount"
                     type="number"
                     placeholder={`${formatCurrency(0, currency)}`}
+                    defaultValue={convertCurrency(
+                      subscription.price,
+                      subscription.currency,
+                      currency,
+                    )}
                   />
                 </Field>
                 <Field>
                   <Label>Title</Label>
-                  <Input name="title" placeholder="Netflix, Spotify, etc." />
+                  <Input
+                    name="title"
+                    placeholder="Netflix, Spotify, etc."
+                    defaultValue={subscription.title}
+                  />
                 </Field>
                 <Field>
                   <Label>Category</Label>
-                  <Select name="category">
+                  <Select name="category" defaultValue={subscription.category}>
                     {Object.values(SubscriptionCategory).map((category) => (
                       <option key={category} value={category}>
                         {category}
@@ -77,6 +90,7 @@ export default function NewSubscription() {
                   <Input
                     name="renewsAt"
                     placeholder="YYYY-MM-DD as 2024-01-01"
+                    defaultValue={subscription.renewsAt.toLocaleDateString()}
                   />
                 </Field>
               </FieldGroup>
@@ -87,9 +101,9 @@ export default function NewSubscription() {
           <Button plain onClick={() => setIsOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={handleCreateSubscription}>Create</Button>
+          <Button onClick={handleUpdateSubscription}>Update</Button>
         </DialogActions>
       </Dialog>
     </>
   );
-}
+};
