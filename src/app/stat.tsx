@@ -17,10 +17,10 @@ export function Stat({
         {title}
       </div>
       <div className="mt-3 text-3xl/8 font-semibold sm:text-2xl/8">{value}</div>
-      {change && (
+      {change !== undefined && (
         <div className="mt-3 space-x-1 text-sm/6 sm:text-xs/6">
-          <Badge color={change > 0 ? "lime" : "pink"}>
-            {change > 0 ? "+" : "-"}
+          <Badge color={change >= 0 ? "lime" : "pink"}>
+            {change >= 0 ? "+" : "-"}
             {change}%
           </Badge>
           <span className="text-zinc-500">from last month</span>

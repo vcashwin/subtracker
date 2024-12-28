@@ -9,24 +9,32 @@ const calculateTotalMonthlyCost = (
   currency: Currency,
 ) => {
   const totalCost = subscriptions.reduce(
-    (acc, subscription) => acc + subscription.price,
+    (acc, subscription) =>
+      acc +
+      convertCurrency(subscription.price, subscription.currency, currency),
     0,
   );
-  const convertedCost = convertCurrency(totalCost, currency);
-  return convertedCost;
+  return totalCost;
 };
 
-const calculateCostChangePercentage = (subscriptions: Subscription[]) => {
+const calculateCostChangePercentage = (
+  subscriptions: Subscription[],
+  currency: Currency,
+) => {
   const thisMonth = new Date().getMonth();
   const thisMonthSubscriptions = subscriptions.filter(
     (subscription) => subscription.createdAt.getMonth() >= thisMonth,
   );
   const thisMonthTotal = thisMonthSubscriptions.reduce(
-    (acc, subscription) => acc + subscription.price,
+    (acc, subscription) =>
+      acc +
+      convertCurrency(subscription.price, subscription.currency, currency),
     0,
   );
   const allTimeTotal = subscriptions.reduce(
-    (acc, subscription) => acc + subscription.price,
+    (acc, subscription) =>
+      acc +
+      convertCurrency(subscription.price, subscription.currency, currency),
     0,
   );
   return ((allTimeTotal - thisMonthTotal) / allTimeTotal) * 100;
@@ -40,14 +48,18 @@ export default function MonthlyCost({
   const { currency } = useGlobalContext();
 
   const totalMonthlyCost = calculateTotalMonthlyCost(subscriptions, currency);
-  const thisMonthPercentageChange =
-    calculateCostChangePercentage(subscriptions);
+  const thisMonthPercentageChange = calculateCostChangePercentage(
+    subscriptions,
+    currency,
+  );
 
   return (
     <Stat
       title="Total Monthly Cost"
       value={formatCurrency(totalMonthlyCost, currency)}
-      change={Number(thisMonthPercentageChange)}
+      change={
+        subscriptions.length > 0 ? Number(thisMonthPercentageChange) : undefined
+      }
     />
   );
 }

@@ -22,7 +22,7 @@ model Subscription {
   price     Int
   currency  Currency
   renewsAt  DateTime
-  status    SubscriptionStatus
+  status    SubscriptionStatus   @default(ACTIVE)
   category  SubscriptionCategory
 }
 

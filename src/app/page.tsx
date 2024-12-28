@@ -63,7 +63,10 @@ export default async function Home() {
               </TableCell>
               <TableCell>{subscription.category}</TableCell>
               <TableCell className="text-right">
-                <Price price={subscription.price} />
+                <Price
+                  price={subscription.price}
+                  baseCurrency={subscription.currency}
+                />
               </TableCell>
             </TableRow>
           ))}

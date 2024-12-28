@@ -14,8 +14,15 @@ const CURRENCY_CONVERSION_RATE = {
   INR: 85,
 };
 
-const convertCurrency = (amount: number, currency: Currency) => {
-  return amount * CURRENCY_CONVERSION_RATE[currency];
+const convertCurrency = (
+  amount: number,
+  baseCurrency: Currency,
+  targetCurrency: Currency,
+) => {
+  return (
+    (amount * CURRENCY_CONVERSION_RATE[targetCurrency]) /
+    CURRENCY_CONVERSION_RATE[baseCurrency]
+  );
 };
 
 export { formatCurrency, convertCurrency, CURRENCY_CONVERSION_RATE };

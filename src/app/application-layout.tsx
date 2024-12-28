@@ -11,7 +11,6 @@ import { Heading } from "@/components/heading";
 import {
   Navbar,
   NavbarDivider,
-  NavbarItem,
   NavbarSection,
   NavbarSpacer,
 } from "@/components/navbar";
@@ -27,11 +26,11 @@ import { StackedLayout } from "@/components/stacked-layout";
 import {
   ChevronDownIcon,
   Cog8ToothIcon,
-  CurrencyDollarIcon,
-  PlusCircleIcon,
   PlusIcon,
 } from "@heroicons/react/16/solid";
+import NewSubscription from "./new-subscription";
 import ToggleCurrency from "./toggle-currency";
+import { Link } from "@/components/link";
 
 const navItems = [
   { label: "Home", url: "/" },
@@ -79,13 +78,13 @@ export default function ApplicationLayout({
     <StackedLayout
       navbar={
         <Navbar>
-          <Heading>SubTracker</Heading>
+          <Link href="/">
+            <Heading>SubTracker</Heading>
+          </Link>
           <NavbarDivider className="max-lg:hidden" />
           <NavbarSpacer />
           <NavbarSection>
-            <NavbarItem aria-label="New Subscription">
-              <PlusCircleIcon />
-            </NavbarItem>
+            <NewSubscription />
             <ToggleCurrency />
           </NavbarSection>
         </Navbar>
