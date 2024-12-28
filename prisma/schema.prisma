@@ -20,7 +20,7 @@ model Subscription {
   updatedAt DateTime             @updatedAt
   title     String
   price     Int
-  currency  String
+  currency  Currency
   renewsAt  DateTime
   status    SubscriptionStatus
   category  SubscriptionCategory
@@ -38,4 +38,11 @@ enum SubscriptionCategory {
   UTILITIES
   COURSES
   OTHER
+}
+
+enum Currency {
+  USD
+  EUR
+  GBP
+  INR
 }
