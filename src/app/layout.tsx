@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import ApplicationLayout from "./application-layout";
 import { GlobalProvider } from "@/providers/GlobalProvider";
 import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "@/components/toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
         <GlobalProvider>
           <ApplicationLayout>{children}</ApplicationLayout>
         </GlobalProvider>
+        <Toaster />
       </body>
     </html>
   );

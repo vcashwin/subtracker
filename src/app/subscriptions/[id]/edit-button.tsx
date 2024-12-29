@@ -17,6 +17,7 @@ import { convertCurrency, formatCurrency } from "@/utils";
 import { useRef, useState } from "react";
 import { SubscriptionCategory } from "@prisma/client";
 import { updateSubscription } from "@/actions/update-subscription";
+import { toast } from "@/components/toast";
 
 export const EditButton = ({
   subscription,
@@ -39,6 +40,7 @@ export const EditButton = ({
     };
     await updateSubscription(subscription.id, updatedSubscription);
     setIsOpen(false);
+    toast.success("Subscription updated successfully");
   };
   return (
     <>
