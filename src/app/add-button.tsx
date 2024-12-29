@@ -34,9 +34,12 @@ export default function NewSubscription() {
       renewsAt: new Date(formValues.renewsAt as string),
       category: formValues.category as SubscriptionCategory,
     };
-    await createSubscription(subscription);
+    toast.promise(createSubscription(subscription), {
+      loading: "Creating the subscription...",
+      success: "Subscription created successfully",
+      error: "Failed to create subscription. Please try again.",
+    });
     setIsOpen(false);
-    toast.success("Subscription created successfully");
   };
   return (
     <>

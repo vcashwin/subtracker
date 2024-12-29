@@ -6,12 +6,11 @@ import { toast } from "@/components/toast";
 
 export const DeleteButton = ({ id }: { id: string }) => {
   const handleDelete = async () => {
-    try {
-      await deleteSubscription(id);
-      toast.success("Subscription deleted successfully");
-    } catch (error) {
-      toast.error("Failed to delete subscription");
-    }
+    toast.promise(deleteSubscription(id), {
+      loading: "Deleting the subscription...",
+      success: "Subscription deleted successfully",
+      error: "Failed to delete subscription. Please try again.",
+    });
   };
   return <Button onClick={handleDelete}>Delete</Button>;
 };

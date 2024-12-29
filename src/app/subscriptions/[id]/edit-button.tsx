@@ -38,9 +38,12 @@ export const EditButton = ({
       renewsAt: new Date(formValues.renewsAt as string),
       category: formValues.category as SubscriptionCategory,
     };
-    await updateSubscription(subscription.id, updatedSubscription);
+    toast.promise(updateSubscription(subscription.id, updatedSubscription), {
+      loading: "Updating the subscription...",
+      success: "Subscription updated successfully",
+      error: "Failed to update subscription. Please try again.",
+    });
     setIsOpen(false);
-    toast.success("Subscription updated successfully");
   };
   return (
     <>

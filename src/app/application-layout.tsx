@@ -28,7 +28,7 @@ import {
   Cog8ToothIcon,
   PlusIcon,
 } from "@heroicons/react/16/solid";
-import NewSubscription from "./new-subscription";
+import NewSubscription from "./add-button";
 import ToggleCurrency from "./toggle-currency";
 import { Link } from "@/components/link";
 
