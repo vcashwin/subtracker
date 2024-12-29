@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import ApplicationLayout from "./application-layout";
 import { GlobalProvider } from "@/providers/GlobalProvider";
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
       className="bg-white lg:bg-zinc-100 dark:bg-zinc-900 dark:lg:bg-zinc-950"
     >
       <body className={clsx(inter.className)}>
+        <NextTopLoader />
         <GlobalProvider>
           <ApplicationLayout>{children}</ApplicationLayout>
         </GlobalProvider>
