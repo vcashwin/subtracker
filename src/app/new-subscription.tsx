@@ -13,6 +13,7 @@ import { Field, FieldGroup, Fieldset, Label } from "@/components/fieldset";
 import { Input } from "@/components/input";
 import { NavbarItem } from "@/components/navbar";
 import { Select } from "@/components/select";
+import { toast } from "@/components/toast";
 import { useGlobalContext } from "@/providers/GlobalProvider";
 import { formatCurrency } from "@/utils";
 import { PlusCircleIcon } from "@heroicons/react/16/solid";
@@ -35,6 +36,7 @@ export default function NewSubscription() {
     };
     await createSubscription(subscription);
     setIsOpen(false);
+    toast.success("Subscription created successfully");
   };
   return (
     <>
